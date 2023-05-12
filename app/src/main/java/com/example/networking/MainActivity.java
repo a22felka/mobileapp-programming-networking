@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -12,7 +13,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     private final String JSON_URL = "HTTPS_URL_TO_JSON_DATA_CHANGE_THIS_URL";
     private final String JSON_FILE = "mountains.json";
-    private ArrayList<Mountain> mountainList = new ArrayList<>();
+    private ArrayList<Mountain> mountainList;
+    private myAdapter Adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,5 +28,4 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     public void onPostExecute(String json) {
         Log.d("MainActivity", json);
     }
-
 }
