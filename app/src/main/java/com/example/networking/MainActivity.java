@@ -2,9 +2,9 @@ package com.example.networking;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
         new JsonFile(this, this).execute(JSON_FILE);
         //new JsonTask(this).execute(JSON_URL);
+        mountainList = new ArrayList<Mountain>();
+        Adapter = new myAdapter(mountainList);
     }
 
     @Override
