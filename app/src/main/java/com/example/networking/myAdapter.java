@@ -12,23 +12,24 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
+public class myAdapter extends RecyclerView.Adapter<myViewHolder> {
 
     private List<Mountain> items;
     private LayoutInflater layoutInflater;
 
-    public myAdapter(ArrayList<Mountain> mountainList) {
+
+    public myAdapter (List<Mountain> items) {
+        this.items = items;
     }
-
-
     @Override
     @NonNull
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(layoutInflater.inflate(R.layout.item_mountain, parent, false));
+    public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mountain, parent, false);
+        return new myViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         holder.title.setText(items.get(position).getName());
     }
 
@@ -36,16 +37,4 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
     public int getItemCount() {
         return items.size();
     }
-
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            title = itemView.findViewById(R.id.title);
-        }
-
-    }
-
 }

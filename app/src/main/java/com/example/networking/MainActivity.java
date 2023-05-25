@@ -5,6 +5,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,28 +20,39 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     private final String JSON_URL = "https://mobprog.webug.se/json-api?login=brom";
     private final String JSON_FILE = "mountains.json";
-    private ArrayList<Mountain> mountainList;
-    private myAdapter Adapter;
+    private ArrayList<Mountain> mountainList = new ArrayList<Mountain>();;
+    private myAdapter adapter;
+    private RecyclerView recyclerview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new JsonFile(this, this).execute(JSON_FILE);
+
         //new JsonTask(this).execute(JSON_URL);
-        mountainList = new ArrayList<Mountain>();
-        Adapter = new myAdapter(mountainList);
+        recyclerview = findViewById(R.id.recyclerView);
+        adapter = new myAdapter(mountainList);
+        recyclerview.setAdapter(adapter);
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+
+        new JsonFile(this, this).execute(JSON_FILE);
+
     }
 
     @Override
     public void onPostExecute(String json) {
-        Log.d("MainActivity", json);
+        Log.d("felix", json);
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Mountain>>() {}.getType();
-        List<Mountain> listOfMountains = gson.fromJson(json, type);
+        Type type = new TypeToken<ArrayList<Mountain>>() {}.getType();
+        ArrayList<Mountain> data = gson.fromJson(json, type);
+        Log.d("fore", String.valueOf(data));
+        mountainList.addAll(data);
+        Log.d("efter", String.valueOf(data));
 
-        for (Mountain mountain:listOfMountains){
+        adapter.notifyDataSetChanged();
+
+        for (Mountain mountain:mountainList){
             Log.d("MainActivity", mountain.getName());
         }
     }
