@@ -17,7 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
+.
 @Override
 public void onPostExecute(String json) {
 Log.d("MainActivity", json);
@@ -30,3 +30,13 @@ List<Mountain> listOfMountains = gson.fromJson(json, type);
     }
 }
 
+Jag försökte sedan lägga in den parsade datan in i Mountains.java filen men emulatorn började krasha, det tog lång 
+tid och mycket hjälp men tillslut löstes problemet genom att initiera min arrayList tidigare i koden, eftersom jag 
+hade försökt använda datan när den fortfarande var null. Efter det bytte jag från att ta datan ifrån json filen 
+till att hämta den från URLen och sedan var jag klar.
+
+private final String JSON_URL = "https://mobprog.webug.se/json-api?login=brom";
+private final String JSON_FILE = "mountains.json";
+private ArrayList<Mountain> mountainList = new ArrayList<Mountain>();;
+
+![img.png](img.png)
